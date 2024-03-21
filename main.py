@@ -1,42 +1,15 @@
-from ursina import *
-from ursina.shaders import lit_with_shadows_shader
-from player import Player
-import globals as g
+import tkinter as tk
+from tkinter import ttk
 
-sys.tracebacklimit = 1
+class Launcher(tk.Tk):
+	def __init__(self, title: str, width: int, height: int):
+		super().__init__()
 
-class Game(Entity):
-
-	def __init__(self):
-		super().__init__(position=Vec3(0, 0, 0), ignore_paused=True)
-
-		self.sun = DirectionalLight()
-		self.sun.look_at(Vec3(1, -1, -1))
-		self.sky = Sky(texture='skybox')
-		self.ground = Entity(model='plane', collider='box', scale=128, texture='default', texture_scale=(32, 32))
-
-		return
-
-	def input(self, key):
-
-		if key == 'escape':
-			self.exit_application()
-
-		return
-
-	def update(self):
-		return
-
-	def exit_application(self):
-		app.userExit()
-		return
+		self.title(title)
+		self.geometry(f'{width}x{height}')
+		self.resizable(tk.FALSE, tk.FALSE)
 
 
-app = Ursina()
-
-Entity.default_shader = lit_with_shadows_shader
-
-g.GAME = Game()
-g.PLAYERS = Player(position=(0, 1, 0))
-
-app.run()
+if __name__ == '__main__':
+	launcher = Launcher('Game launcher', 512, 512)
+	launcher.mainloop()
