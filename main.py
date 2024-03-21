@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
+import globals as g
 import game
 
 class Launcher(tk.Tk):
@@ -11,10 +12,13 @@ class Launcher(tk.Tk):
 		self.geometry(f'{width}x{height}')
 		self.resizable(tk.FALSE, tk.FALSE)
 
-		self.launch = ttk.Button(self, text='Launch', command=lambda: game.run())
+		self.launch = ttk.Button(self, text='Launch', command=lambda: self.run())
 		self.launch.pack()
 
+	def run(self):
+		g.LAUNCHER.destroy()
+		game.run()
 
 if __name__ == '__main__':
-	launcher = Launcher('Game launcher', 512, 512)
-	launcher.mainloop()
+	g.LAUNCHER = Launcher('Game launcher', 512, 512)
+	g.LAUNCHER.mainloop()
