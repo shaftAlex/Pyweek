@@ -28,15 +28,15 @@ class Game(Entity):
 		return
 
 	def exit_application(self):
-		app.userExit()
+		self.game.userExit()
 		return
 
+def run():
+	game = Ursina()
 
-app = Ursina()
+	Entity.default_shader = lit_with_shadows_shader
 
-Entity.default_shader = lit_with_shadows_shader
+	g.GAME = Game()
+	g.PLAYERS = Player(position=Vec3(0, 1, 0))
 
-g.GAME = Game()
-g.PLAYERS = Player(position=Vec3(0, 1, 0))
-
-app.run()
+	game.run()
