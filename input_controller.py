@@ -11,7 +11,6 @@ class AxisId(Enum):
   HORIZONTAL = 2
 
 def getButton(id: ButtonId) -> bool:
-  
   if id == ButtonId.JUMP:
     return held_keys['space']
   elif id == ButtonId.ACCEPT:
@@ -22,7 +21,6 @@ def getButton(id: ButtonId) -> bool:
     raise("Invalid ButtonId")
 
 def getAxis(id: AxisId) -> float:
-
   # WASD input for now
   if id == AxisId.VERTICAL:
     if held_keys['w']:
