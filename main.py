@@ -4,6 +4,7 @@ from junk import Junk
 from food import Food
 from treasure import Treasure
 from player import Player
+from dungeon import Dungeon
 
 app = Ursina()
 
@@ -17,10 +18,12 @@ Entity.default_shader = lit_with_shadows_shader
 
 player = Player(position = (0, 3, 0))
 
+dungeon = Dungeon()
+
 sun = DirectionalLight()
 sun.look_at(Vec3(1, -1, -1))
 sky = Sky(texture='assets/textures/skybox')
-ground = Entity(model='plane', collider='box', scale=128, texture='assets/textures/default', texture_scale=(32, 32))
+ground = Entity(model='plane', collider='box', position=(0, 0, 0), scale=24, texture='assets/textures/default', texture_scale=(6, 6))
 
 # spawn some random junk
 for i in range(10):
