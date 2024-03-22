@@ -1,24 +1,35 @@
-import tkinter as tk
-from tkinter import ttk
+from ursina import *
 
 import globals as g
-import game
 
-class Launcher(tk.Tk):
-	def __init__(self, title: str, width: int, height: int):
-		super().__init__()
+from game.core import CollisionHandler, EventManager, InputHandler, Player, StateManager
 
-		self.title(title)
-		self.geometry(f'{width}x{height}')
-		self.resizable(tk.FALSE, tk.FALSE)
 
-		self.launch = ttk.Button(self, text='Launch', command=lambda: self.run())
-		self.launch.pack()
+class Game(Entity):
+	def __init__(self):
+		super().__init__(position=Vec3(0, 0, 0), ignore_paused=True)
 
-	def run(self):
-		g.LAUNCHER.destroy()
-		game.run()
+		g.EVENT_MANAGER = EventManager
+		g.STATE_MANAGER = StateManager
+		g.INPUT_HANDLER = InputHandler
+
+		return
+
+	def input(self, key):
+		InputHandler(key)
+
+	def update(self):
+		pass
+
+
+def main():
+	g.APP = Ursina()
+
+	g.GAME = Game()
+	g.PLAYER = Player()
+
+	g.APP.run()
+
 
 if __name__ == '__main__':
-	g.LAUNCHER = Launcher('Game launcher', 512, 512)
-	g.LAUNCHER.mainloop()
+	main()

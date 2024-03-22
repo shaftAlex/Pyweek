@@ -1,4 +1,8 @@
-LAUNCHER = None  # This is the tkinter launcher app instance
-APP = None  # This is the application window for Ursina
-GAME = None  # This is the entity in Ursina that controls game logic
-PLAYER = None  # This is the entity in Ursina that controls player logic
+APP = None
+GAME = None
+
+EVENT_MANAGER = None
+STATE_MANAGER = None
+INPUT_HANDLER = None
+
+PLAYER = None
