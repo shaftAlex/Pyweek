@@ -23,6 +23,8 @@ class Player(FirstPersonController):
 		camera.y = 1.5
 
 		self.speed = 7
+
+		# TODO: maybe remove
 		self.collider = BoxCollider(self, center=Vec3(0, 1.25, 0), size=Vec3(1, 2.5, 1.25))
 
 		# player HUD

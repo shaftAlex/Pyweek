@@ -5,13 +5,13 @@ from food import Food
 from treasure import Treasure
 from player import Player
 
+app = Ursina()
+
 window.title = 'PyWeek - Tubes'
 window.borderless = False
 window.fullscreen = False
 window.exit_button.visible = False
 window.fps_counter.enabled = True
-
-app = Ursina()
 
 Entity.default_shader = lit_with_shadows_shader
 
@@ -19,8 +19,8 @@ player = Player(position = (0, 3, 0))
 
 sun = DirectionalLight()
 sun.look_at(Vec3(1, -1, -1))
-sky = Sky(texture='skybox')
-ground = Entity(model='plane', collider='box', scale=128, texture='default', texture_scale=(32, 32))
+sky = Sky(texture='assets/textures/skybox')
+ground = Entity(model='plane', collider='box', scale=128, texture='assets/textures/default', texture_scale=(32, 32))
 
 # spawn some random junk
 for i in range(10):
