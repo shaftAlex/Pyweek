@@ -1,8 +1,9 @@
 from ursina import *
-from input_controller import AxisId, getAxis
 from ursina.prefabs.first_person_controller import FirstPersonController
 
-class Player(FirstPersonController):
+from playercontroller import PlayerController
+
+class Player(PlayerController):
 
 	def __init__(self, position: Vec3):
 		super().__init__(position=position, jump_height=2.5, jump_duration=0.4, origin_y=-0.5)
@@ -48,7 +49,6 @@ class Player(FirstPersonController):
 		return
 
 	def update(self):
-		# FIXME: uses builtin controls
 		super().update()
 
 		# player HUD
