@@ -1,24 +1,59 @@
-import tkinter as tk
-from tkinter import ttk
+from ursina import *
+from ursina.shaders import lit_with_shadows_shader
+from junk import Junk
+from food import Food
+from treasure import Treasure
+from player import Player
 
-import globals as g
-import game
+window.title = 'PyWeek - Tubes'
+window.borderless = False
+window.fullscreen = False
+window.exit_button.visible = False
+window.fps_counter.enabled = True
 
-class Launcher(tk.Tk):
-	def __init__(self, title: str, width: int, height: int):
-		super().__init__()
+app = Ursina()
 
-		self.title(title)
-		self.geometry(f'{width}x{height}')
-		self.resizable(tk.FALSE, tk.FALSE)
+Entity.default_shader = lit_with_shadows_shader
 
-		self.launch = ttk.Button(self, text='Launch', command=lambda: self.run())
-		self.launch.pack()
+player = Player(position = (0, 3, 0))
 
-	def run(self):
-		g.LAUNCHER.destroy()
-		game.run()
+sun = DirectionalLight()
+sun.look_at(Vec3(1, -1, -1))
+sky = Sky(texture='skybox')
+ground = Entity(model='plane', collider='box', scale=128, texture='default', texture_scale=(32, 32))
 
-if __name__ == '__main__':
-	g.LAUNCHER = Launcher('Game launcher', 512, 512)
-	g.LAUNCHER.mainloop()
+# spawn some random junk
+for i in range(10):
+	junk = Junk(position=(random.uniform(-10, 10), 0, random.uniform(-10, 10)))
+	player.ignore_list.append(junk)
+
+# spawn some random food
+for i in range(10):
+	food = Food(position=(random.uniform(-10, 10), 0, random.uniform(-10, 10)))
+	player.ignore_list.append(food)
+
+# spawn some random treasure
+for i in range(10):
+	treasure = Treasure(position=(random.uniform(-10, 10), 0, random.uniform(-10, 10)))
+	player.ignore_list.append(treasure)
+
+
+# Pause handler
+pause_overlay = Entity(model='quad', scale=100, color=color.black33, enabled=False, parent=camera.ui)
+pause_text = Text('PAUSED', origin=(0,0), scale=2, enabled=False)
+
+def pause_handler_input(key):
+	if key == 'escape':
+		application.paused = not application.paused # Pause/unpause the game.
+		pause_text.enabled = application.paused 
+		pause_overlay.enabled = application.paused
+		mouse.locked = not application.paused
+pause_handler = Entity(ignore_paused=True,input = pause_handler_input) # needs to be its own entity, so that i can set ignore_paused to True
+
+editor_camera = EditorCamera(enabled=False)
+
+def input(key):
+	if key == 'f1':
+		editor_camera.enabled = not editor_camera.enabled
+
+app.run()
